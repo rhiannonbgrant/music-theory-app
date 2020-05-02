@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400&display=swap"
+      rel="stylesheet"
+    />
+    <title>Music Theory Game</title>
+  </head>
+  <body>
+    <section>
+      <div id="intro" class="container">
+        <h1>Guess the Pitch</h1>
+        <p>Welcome to the game that helps you to perfect your pitch.</p>
+        <button>Let's Play</button>
+      </div>
+      <div id="play-game" class="container fadeOut">
+        <div id="play-tone">
+          <p>Push play to hear a tone.</p>
+          <img
+            src="./images/play-icon.png"
+            alt="play-button"
+            id="play-button"
+          />
+        </div>
+        <div id="answer-div">
+          <div id="input-answer">
+            <input type="text" id="text" />
+          </div>
+          <div id="radio-div">
+            <div>
+              <input
+                type="radio"
+                name="sfn-choice"
+                id="sharp"
+                value="sharp"
+                class="sharpFlat"
+              />
+              <label for="sharp">#</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="sfn-choice"
+                id="natural"
+                value="natural"
+                class="sharpFlat"
+                checked
+              />
+              <label for="natural">&#9838;</label>
+            </div>
+            <div>
+              <input
+                type="radio"
+                name="sfn-choice"
+                id="flat"
+                value="flat"
+                class="sharpFlat"
+              />
+              <label for="flat">&#9837;</label>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button type="submit" id="answer">Submit</button>
+        </div>
+      </div>
+      <div id="correct" class="container fadeOut">
+        <p>Well done, you are correct.</p>
+        <button>Play again.</button>
+      </div>
+      <div id="see-anwer" class="container fadeOut">
+        <p>That was a <span></span>.</p>
+        <button>Play again.</button>
+      </div>
+    </section>
+    <audio class="tone"" src="./sounds/c4-piano.wav"></audio>
+    <script src="./app.js"></script>
+  </body>
+</html>
