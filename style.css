@@ -49,7 +49,7 @@ input {
   appearance: none;
 }
 
-input#text {
+input#note {
   border: none;
   width: 6rem;
   padding: 1rem;

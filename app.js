@@ -4,6 +4,11 @@ const playGame = document.querySelector("#play-game");
 
 const playBtn = document.querySelector("#play-button");
 const tone = document.querySelector(".tone");
+
+const submitAnsBtn = document.querySelector("#answer");
+const noteInput = document.querySelector("#note");
+const semiTone = document.querySelectorAll(".sharpFlat");
+
 let randomNote;
 
 class nextPg {
@@ -26,8 +31,21 @@ class playGamePage extends nextPg {
   generateNote() {
     let randomNumber = Math.floor(Math.random() * notes.length);
     randomNote = notes[randomNumber];
-    tone.src = `./sounds/${randomNote}-piano.wav`;
   }
+}
+
+function compareValues() {
+  let semiToneValue;
+  if (semiTone[0].checked === true) {
+    semiToneValue = "sharp";
+  }
+  if (semiTone[1].checked === true) {
+    semiToneValue = "natural";
+  }
+  if (semiTone[2].checked === true) {
+    semiToneValue = "flat";
+  }
+  console.log(noteInput.value.toLowerCase() + semiToneValue);
 }
 
 const notes = [
@@ -72,25 +90,9 @@ toPlayGame.nextPgBtn.addEventListener("click", function () {
 
 playBtn.addEventListener("click", (event) => {
   event.preventDefault();
+  tone.src = `./sounds/${randomNote}-piano.wav`;
   tone.currentTime = 0;
   tone.play();
 });
 
-// playBtn.addEventListener("click", (event, randomNote) => {
-//   ;
-//   console.log(randomNote);
-//   tone.src = `./sounds/${randomNote}-piano.wav`;
-//   tone.currentTime = 0;
-//   tone.play();
-// });
-
-// playBtn.addEventListener(
-//   "click",
-//   (event, randomNote) => {
-//     event.preventDefault();
-//     const randomNumber = Math.floor(Math.random() * notes.length);
-//     randomNote = notes[randomNumber];
-//     return randomNote;
-//   },
-//   { once: true }
-// );
+submitAnsBtn.addEventListener("click", compareValues);
