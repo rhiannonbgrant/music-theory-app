@@ -4,6 +4,7 @@ const playGame = document.querySelector("#play-game");
 
 const playBtn = document.querySelector("#play-button");
 const tone = document.querySelector(".tone");
+let randomNote;
 
 class nextPg {
   constructor(nextPgBtn, currentPg, nextScreen) {
@@ -14,6 +15,18 @@ class nextPg {
   goToNextPg() {
     this.currentPg.classList.add("fadeOut");
     this.nextScreen.classList.add("fadeIn");
+  }
+}
+
+class playGamePage extends nextPg {
+  constructor(nextPgBtn, currentPg, nextScreen) {
+    super(nextPgBtn, currentPg, nextScreen);
+  }
+
+  generateNote() {
+    let randomNumber = Math.floor(Math.random() * notes.length);
+    randomNote = notes[randomNumber];
+    tone.src = `./sounds/${randomNote}-piano.wav`;
   }
 }
 
@@ -48,31 +61,36 @@ const notes = [
   "as5",
   "b5",
 ];
-let randomNote;
 
-playBtn.addEventListener(
-  "click",
-  function (event) {
-    event.preventDefault();
-    const randomNumber = Math.floor(Math.random() * notes.length);
-    randomNote = notes[randomNumber];
-    console.log(randomNote);
-    return randomNote;
-  },
-  { once: true }
-);
+const toPlayGame = new playGamePage(introBtn, introScreen, playGame);
 
-playBtn.addEventListener("click", (event, randomNote) => {
-  event.preventDefault();
-  tone.src = `./sounds/${randomNote}-piano.wav`;
-  console.log(tone.src);
+toPlayGame.nextPgBtn.addEventListener("click", function () {
+  toPlayGame.generateNote();
   console.log(randomNote);
+  toPlayGame.goToNextPg();
+});
+
+playBtn.addEventListener("click", (event) => {
+  event.preventDefault();
   tone.currentTime = 0;
   tone.play();
 });
 
-const toPlayGame = new nextPg(introBtn, introScreen, playGame);
+// playBtn.addEventListener("click", (event, randomNote) => {
+//   ;
+//   console.log(randomNote);
+//   tone.src = `./sounds/${randomNote}-piano.wav`;
+//   tone.currentTime = 0;
+//   tone.play();
+// });
 
-toPlayGame.nextPgBtn.addEventListener("click", function () {
-  toPlayGame.goToNextPg();
-});
+// playBtn.addEventListener(
+//   "click",
+//   (event, randomNote) => {
+//     event.preventDefault();
+//     const randomNumber = Math.floor(Math.random() * notes.length);
+//     randomNote = notes[randomNumber];
+//     return randomNote;
+//   },
+//   { once: true }
+// );
