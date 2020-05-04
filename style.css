@@ -28,7 +28,7 @@ h2 {
 
 p {
   padding: 40px;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   line-height: 2rem;
   font-family: "Rubik", sans-serif;
   text-align: center;
@@ -119,4 +119,8 @@ div.fadeIn {
   opacity: 1;
   pointer-events: all;
   display: flex;
+}
+#correct p {
+  margin: 40vh 0 3vh 0;
+  font-size: 2rem;
 }

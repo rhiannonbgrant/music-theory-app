@@ -11,6 +11,8 @@ const semiTone = document.querySelectorAll(".sharpFlat");
 
 const correctPg = document.querySelector("#correct");
 
+const playAgainBtn = document.querySelector(".play-again");
+
 let randomNote;
 let playerGuess;
 let playerResult;
@@ -23,20 +25,10 @@ class nextPg {
   }
   goToNextPg() {
     this.currentPg.classList.add("fadeOut");
+    this.nextPg.classList.remove("fadeOut");
     this.nextPg.classList.add("fadeIn");
+    this.currentPg.classList.remove("fadeIn");
   }
-  goToNextPgRemove() {
-    this.currentPg.classList.add("fadeOut");
-    this.currentPg.classList.remove("fadeOut");
-    this.nextPg.classList.add("fadeIn");
-  }
-}
-
-class playGamePage extends nextPg {
-  constructor(nextPgBtn, currentPg, nextPg) {
-    super(nextPgBtn, currentPg, nextPg);
-  }
-
   generateNote() {
     let randomNumber = Math.floor(Math.random() * notes.length);
     randomNote = notes[randomNumber];
@@ -112,8 +104,9 @@ const notes = [
   "b5",
 ];
 
-const toPlayGame = new playGamePage(introBtn, introScreen, playGame);
+const toPlayGame = new nextPg(introBtn, introScreen, playGame);
 const toCorrectPg = new nextPg(submitAnsBtn, playGame, correctPg);
+const toPlayAgain = new nextPg(playAgainBtn, correctPg, playGame);
 
 toPlayGame.nextPgBtn.addEventListener("click", function () {
   toPlayGame.generateNote();
@@ -129,3 +122,4 @@ playBtn.addEventListener("click", (event) => {
 });
 
 submitAnsBtn.addEventListener("click", addInputValues);
+playAgainBtn.addEventListener("click", toPlayAgain.goToNextPg);
