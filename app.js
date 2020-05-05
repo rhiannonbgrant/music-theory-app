@@ -12,6 +12,7 @@ const semiTone = document.querySelectorAll(".sharpFlat");
 const correctPg = document.querySelector("#correct");
 
 const playAgainBtn = document.querySelector(".play-again");
+const submitDiv = document.querySelector("#submit-div");
 
 let randomNote;
 let playerGuess;
@@ -24,10 +25,8 @@ class nextPg {
     this.nextPg = nextPg;
   }
   goToNextPg() {
-    this.currentPg.classList.add("fadeOut");
-    this.nextPg.classList.remove("fadeOut");
-    this.nextPg.classList.add("fadeIn");
-    this.currentPg.classList.remove("fadeIn");
+    this.currentPg.classList.toggle("fadeIn");
+    this.nextPg.classList.toggle("fadeIn");
   }
   generateNote() {
     let randomNumber = Math.floor(Math.random() * notes.length);
@@ -35,7 +34,26 @@ class nextPg {
   }
 }
 
-const addInputValues = () => {
+const incorrect = () => {
+  const incorrectText = document.createElement("p");
+  incorrectText.innerText =
+    "Sorry, that's incorrect. Guess again or <span>click here</span> to see the answer";
+  submitDiv.appendChild(incorrectText);
+};
+
+const playGamePg = () => {
+  toPlayGame.generateNote();
+  console.log(randomNote);
+  toPlayGame.goToNextPg();
+};
+
+const playGamePgFromEnd = () => {
+  toPlayAgain.generateNote();
+  console.log(randomNote);
+  toPlayAgain.goToNextPg();
+};
+
+const checkPlayerInput = () => {
   let semiToneValue;
   let noteLowerCase = noteInput.value.toLowerCase();
   if (semiTone[0].checked === true) {
@@ -43,14 +61,14 @@ const addInputValues = () => {
     if (randomNote.slice(0, 2) === noteLowerCase + semiToneValue) {
       toCorrectPg.goToNextPg();
     } else {
-      console.log("you are incorrect");
+      incorrect();
     }
   }
   if (semiTone[1].checked === true) {
     if (randomNote.slice(0, 1) === noteLowerCase) {
       toCorrectPg.goToNextPg();
     } else {
-      console.log("you are incorrect");
+      incorrect();
     }
   }
   if (semiTone[2].checked === true) {
@@ -66,7 +84,7 @@ const addInputValues = () => {
     } else if (noteLowerCase === "b" && randomNote.slice(0, 1) === "a") {
       toCorrectPg.goToNextPg();
     } else {
-      console.log("you are wrong");
+      incorrect();
     }
   }
   playerGuess = noteLowerCase + semiToneValue;
@@ -108,11 +126,8 @@ const toPlayGame = new nextPg(introBtn, introScreen, playGame);
 const toCorrectPg = new nextPg(submitAnsBtn, playGame, correctPg);
 const toPlayAgain = new nextPg(playAgainBtn, correctPg, playGame);
 
-toPlayGame.nextPgBtn.addEventListener("click", function () {
-  toPlayGame.generateNote();
-  console.log(randomNote);
-  toPlayGame.goToNextPg();
-});
+toPlayGame.nextPgBtn.addEventListener("click", playGamePg);
+toPlayAgain.nextPgBtn.addEventListener("click", playGamePgFromEnd);
 
 playBtn.addEventListener("click", (event) => {
   event.preventDefault();
@@ -121,5 +136,5 @@ playBtn.addEventListener("click", (event) => {
   tone.play();
 });
 
-submitAnsBtn.addEventListener("click", addInputValues);
-playAgainBtn.addEventListener("click", toPlayAgain.goToNextPg);
+submitAnsBtn.addEventListener("click", checkPlayerInput);
+playAgainBtn.addEventListener("click", playGamePg);

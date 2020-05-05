@@ -96,6 +96,9 @@ label {
   flex-direction: column;
   justify-content: top;
   align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  display: none;
 }
 div#radio-div {
   margin-left: 1rem;
