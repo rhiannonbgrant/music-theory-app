@@ -11,8 +11,8 @@ const semiTone = document.querySelectorAll(".sharpFlat");
 
 const correctPg = document.querySelector("#correct");
 
-const playAgainBtn1 = document.querySelector("#play-again1");
-const playAgainBtn2 = document.querySelector("#play-again2");
+const playAgainCorrectBtn = document.querySelector("#play-again1");
+const playAgainIncorrectBtn = document.querySelector("#play-again2");
 const submitDiv = document.querySelector("#submit-div");
 
 const seeAnswerDiv = document.querySelector("#to-see-answer");
@@ -27,6 +27,39 @@ let randomNote;
 let playerGuess;
 let playerResult;
 
+const notes = [
+  "c4",
+  "cs4",
+  "d4",
+  "ds4",
+  "e4",
+  "f4",
+  "fs4",
+  "g4",
+  "gs4",
+  "a4",
+  "as4",
+  "b4",
+  "c5",
+  "cs5",
+  "d5",
+  "ds5",
+  "e5",
+  "c5",
+  "cs5",
+  "d5",
+  "ds5",
+  "e5",
+  "f5",
+  "fs5",
+  "g5",
+  "gs5",
+  "a5",
+  "as5",
+  "b5",
+];
+
+//Page transition class
 class nextPg {
   constructor(nextPgBtn, currentPg, nextPg) {
     this.nextPgBtn = nextPgBtn;
@@ -43,66 +76,35 @@ class nextPg {
   }
 }
 
+//Generate Text telling them they are Incorrect and give them the option to see the answer
 const incorrect = () => {
   seeAnswerDiv.classList.remove("fadeOut");
   seeAnswerBtn.addEventListener("click", seeCorrectAnswer);
 };
 
-// const toPlayGamePg = (this) => {
-//   this.generateNote();
-//   console.log(randomNote);
-//   this.goToNextPg();
-// };
-
-const seeCorrectAnswer = () => {
-  toSeeAnswerPg.goToNextPg();
-  let semiToneValue;
-  let otherNoteName;
-  let correctNote = randomNote.slice(0, 1);
-  let correctUpperCase = correctNote.toUpperCase();
-  if (randomNote.slice(1, 2) === "s") {
-    semiToneValue = "#";
-    if (randomNote.slice(0, 2) === "cs") {
-      otherNoteName = ", also known as a D" + flat.innerText;
-    } else if (randomNote.slice(0, 2) === "ds") {
-      otherNoteName = ", also known as a E" + flat.innerText;
-    } else if (randomNote.slice(0, 2) === "fs") {
-      otherNoteName = ", also known as a G" + flat.innerText;
-    } else if (randomNote.slice(0, 2) === "gs") {
-      otherNoteName = ", also known as a A" + flat.innerText;
-    } else if (randomNote.slice(0, 2) === "as") {
-      otherNoteName = ", also known as a B" + flat.innerText;
-    } else {
-      otherNoteName = "";
-    }
-  } else {
-    semiToneValue = "";
-    otherNoteName = "";
-  }
-  answerHere.innerText = correctUpperCase + semiToneValue + otherNoteName;
-};
-
+//Pages transitions that lead to play game page
 const playGamePg = () => {
   toPlayGame.generateNote();
   console.log(randomNote);
   toPlayGame.goToNextPg();
 };
 
-const playGamePgFromEnd1 = () => {
-  toPlayAgain1.generateNote();
+const playGameAgainFromCorrect = () => {
+  toPlayAgainCorrectPg.generateNote();
   console.log(randomNote);
-  toPlayAgain1.goToNextPg();
+  toPlayAgainCorrectPg.goToNextPg();
   noteInput.value = "";
 };
 
-const playGamePgFromEnd2 = () => {
-  toPlayAgain2.generateNote();
+const playGameAgainFromIncorrect = () => {
+  toPlayAgainIncorrectPg.generateNote();
   console.log(randomNote);
-  toPlayAgain2.goToNextPg();
+  toPlayAgainIncorrectPg.goToNextPg();
   seeAnswerDiv.classList.add("fadeOut");
   noteInput.value = "";
 };
 
+//Checks the user Input to see if it correct or not and directs the user to different pg based on the result
 const checkPlayerInput = () => {
   let semiToneValue;
   let noteLowerCase = noteInput.value.toLowerCase();
@@ -143,44 +145,51 @@ const checkPlayerInput = () => {
   playerGuess = noteLowerCase + semiToneValue;
 };
 
-const notes = [
-  "c4",
-  "cs4",
-  "d4",
-  "ds4",
-  "e4",
-  "f4",
-  "fs4",
-  "g4",
-  "gs4",
-  "a4",
-  "as4",
-  "b4",
-  "c5",
-  "cs5",
-  "d5",
-  "ds5",
-  "e5",
-  "c5",
-  "cs5",
-  "d5",
-  "ds5",
-  "e5",
-  "f5",
-  "fs5",
-  "g5",
-  "gs5",
-  "a5",
-  "as5",
-  "b5",
-];
+//Generates the correct answer in some text
+const seeCorrectAnswer = () => {
+  toSeeAnswerPg.goToNextPg();
+  let semiToneValue;
+  let otherNoteName;
+  let correctNote = randomNote.slice(0, 1);
+  let correctUpperCase = correctNote.toUpperCase();
+  if (randomNote.slice(1, 2) === "s") {
+    semiToneValue = "#";
+    if (randomNote.slice(0, 2) === "cs") {
+      otherNoteName = ", also known as a D" + flat.innerText;
+    } else if (randomNote.slice(0, 2) === "ds") {
+      otherNoteName = ", also known as a E" + flat.innerText;
+    } else if (randomNote.slice(0, 2) === "fs") {
+      otherNoteName = ", also known as a G" + flat.innerText;
+    } else if (randomNote.slice(0, 2) === "gs") {
+      otherNoteName = ", also known as a A" + flat.innerText;
+    } else if (randomNote.slice(0, 2) === "as") {
+      otherNoteName = ", also known as a B" + flat.innerText;
+    } else {
+      otherNoteName = "";
+    }
+  } else {
+    semiToneValue = "";
+    otherNoteName = "";
+  }
+  answerHere.innerText = correctUpperCase + semiToneValue + otherNoteName;
+};
 
+//declaring different page transitions
 const toPlayGame = new nextPg(introBtn, introScreen, playGame);
 const toCorrectPg = new nextPg(submitAnsBtn, playGame, correctPg);
-const toPlayAgain1 = new nextPg(playAgainBtn1, correctPg, playGame);
+const toPlayAgainCorrectPg = new nextPg(
+  playAgainCorrectBtn,
+  correctPg,
+  playGame
+);
 const toSeeAnswerPg = new nextPg(seeAnswerBtn, playGame, seeAnswerPg);
-const toPlayAgain2 = new nextPg(playAgainBtn2, seeAnswerPg, playGame);
+const toPlayAgainIncorrectPg = new nextPg(
+  playAgainIncorrectBtn,
+  seeAnswerPg,
+  playGame
+);
 
+//Eventlisteners
 playBtn.addEventListener("click", (event) => {
   event.preventDefault();
   tone.src = `./sounds/${randomNote}-piano.wav`;
@@ -188,6 +197,12 @@ playBtn.addEventListener("click", (event) => {
   tone.play();
 });
 toPlayGame.nextPgBtn.addEventListener("click", playGamePg);
-toPlayAgain1.nextPgBtn.addEventListener("click", playGamePgFromEnd1);
+toPlayAgainCorrectPg.nextPgBtn.addEventListener(
+  "click",
+  playGameAgainFromCorrect
+);
 submitAnsBtn.addEventListener("click", checkPlayerInput);
-toPlayAgain2.nextPgBtn.addEventListener("click", playGamePgFromEnd2);
+toPlayAgainIncorrectPg.nextPgBtn.addEventListener(
+  "click",
+  playGameAgainFromIncorrect
+);
