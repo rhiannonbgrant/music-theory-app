@@ -14,6 +14,11 @@ const correctPg = document.querySelector("#correct");
 const playAgainBtn = document.querySelector(".play-again");
 const submitDiv = document.querySelector("#submit-div");
 
+const seeAnswerDiv = document.querySelector("#to-see-answer");
+const seeAnswerPg = document.querySelector("#see-answer");
+const seeAnswerBtn = document.querySelector("#to-see-answer-button");
+const answerHere = document.querySelector("#see-answer span");
+
 let randomNote;
 let playerGuess;
 let playerResult;
@@ -32,14 +37,31 @@ class nextPg {
     let randomNumber = Math.floor(Math.random() * notes.length);
     randomNote = notes[randomNumber];
   }
+  // class playGameTime extends nextPg{
+  //   constructor(nextPgBtn, currentPg, nextPg){
+  //     super(nextPgBtn, currentPg, nextPg)
+  //   }
+  // generateNote() {
+  //   let randomNumber = Math.floor(Math.random() * notes.length);
+  //   randomNote = notes[randomNumber];
+  // }
 }
-
 const incorrect = () => {
-  const incorrectText = document.createElement("p");
-  incorrectText.innerText =
-    "Sorry, that's incorrect. Guess again or <span>click here</span> to see the answer";
-  submitDiv.appendChild(incorrectText);
+  seeAnswerDiv.classList.toggle("fadeOut");
+  seeAnswerBtn.addEventListener("click", seeCorrectAnswer);
 };
+
+// const toPlayGamePg = (this) => {
+//   this.generateNote();
+//   console.log(randomNote);
+//   this.goToNextPg();
+// };
+
+function seeCorrectAnswer(randomNote) {
+  answerHere.innerText = randomNote;
+  console.log(randomNote);
+  toSeeAnswerPg.goToNextPg();
+}
 
 const playGamePg = () => {
   toPlayGame.generateNote();
@@ -125,9 +147,7 @@ const notes = [
 const toPlayGame = new nextPg(introBtn, introScreen, playGame);
 const toCorrectPg = new nextPg(submitAnsBtn, playGame, correctPg);
 const toPlayAgain = new nextPg(playAgainBtn, correctPg, playGame);
-
-toPlayGame.nextPgBtn.addEventListener("click", playGamePg);
-toPlayAgain.nextPgBtn.addEventListener("click", playGamePgFromEnd);
+const toSeeAnswerPg = new nextPg(seeAnswerBtn, playGame, seeAnswerPg);
 
 playBtn.addEventListener("click", (event) => {
   event.preventDefault();
@@ -135,6 +155,6 @@ playBtn.addEventListener("click", (event) => {
   tone.currentTime = 0;
   tone.play();
 });
-
+toPlayGame.nextPgBtn.addEventListener("click", playGamePg);
+toPlayAgain.nextPgBtn.addEventListener("click", playGamePgFromEnd);
 submitAnsBtn.addEventListener("click", checkPlayerInput);
-playAgainBtn.addEventListener("click", playGamePg);

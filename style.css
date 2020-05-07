@@ -88,6 +88,19 @@ label {
 #play-button {
   height: 60px;
 }
+#submit-div {
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+}
+/* div#to-see-answer {
+ 
+}  */
+
+#submit-div button {
+  width: 150px;
+}
 
 .container {
   width: 100%;
@@ -123,7 +136,11 @@ div.fadeIn {
   pointer-events: all;
   display: flex;
 }
-#correct p {
+.simple-text-pg-padding p {
   margin: 40vh 0 3vh 0;
   font-size: 2rem;
+}
+
+#to-see-answer a {
+  color: red;
 }
