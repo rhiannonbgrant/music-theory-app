@@ -11,7 +11,8 @@ const semiTone = document.querySelectorAll(".sharpFlat");
 
 const correctPg = document.querySelector("#correct");
 
-const playAgainBtn = document.querySelector(".play-again");
+const playAgainBtn1 = document.querySelector("#play-again1");
+const playAgainBtn2 = document.querySelector("#play-again2");
 const submitDiv = document.querySelector("#submit-div");
 
 const seeAnswerDiv = document.querySelector("#to-see-answer");
@@ -43,7 +44,7 @@ class nextPg {
 }
 
 const incorrect = () => {
-  seeAnswerDiv.classList.toggle("fadeOut");
+  seeAnswerDiv.classList.remove("fadeOut");
   seeAnswerBtn.addEventListener("click", seeCorrectAnswer);
 };
 
@@ -87,10 +88,19 @@ const playGamePg = () => {
   toPlayGame.goToNextPg();
 };
 
-const playGamePgFromEnd = () => {
-  toPlayAgain.generateNote();
+const playGamePgFromEnd1 = () => {
+  toPlayAgain1.generateNote();
   console.log(randomNote);
-  toPlayAgain.goToNextPg();
+  toPlayAgain1.goToNextPg();
+  noteInput.value = "";
+};
+
+const playGamePgFromEnd2 = () => {
+  toPlayAgain2.generateNote();
+  console.log(randomNote);
+  toPlayAgain2.goToNextPg();
+  seeAnswerDiv.classList.add("fadeOut");
+  noteInput.value = "";
 };
 
 const checkPlayerInput = () => {
@@ -105,7 +115,10 @@ const checkPlayerInput = () => {
     }
   }
   if (semiTone[1].checked === true) {
-    if (randomNote.slice(0, 1) === noteLowerCase) {
+    if (
+      randomNote.slice(0, 1) === noteLowerCase &&
+      randomNote.slice(1, 2) !== "s"
+    ) {
       toCorrectPg.goToNextPg();
     } else {
       incorrect();
@@ -164,8 +177,9 @@ const notes = [
 
 const toPlayGame = new nextPg(introBtn, introScreen, playGame);
 const toCorrectPg = new nextPg(submitAnsBtn, playGame, correctPg);
-const toPlayAgain = new nextPg(playAgainBtn, correctPg, playGame);
+const toPlayAgain1 = new nextPg(playAgainBtn1, correctPg, playGame);
 const toSeeAnswerPg = new nextPg(seeAnswerBtn, playGame, seeAnswerPg);
+const toPlayAgain2 = new nextPg(playAgainBtn2, seeAnswerPg, playGame);
 
 playBtn.addEventListener("click", (event) => {
   event.preventDefault();
@@ -174,8 +188,6 @@ playBtn.addEventListener("click", (event) => {
   tone.play();
 });
 toPlayGame.nextPgBtn.addEventListener("click", playGamePg);
-toPlayAgain.nextPgBtn.addEventListener("click", playGamePgFromEnd);
+toPlayAgain1.nextPgBtn.addEventListener("click", playGamePgFromEnd1);
 submitAnsBtn.addEventListener("click", checkPlayerInput);
-
-console.log(sharp.innerText);
-console.log(flat.innerText);
+toPlayAgain2.nextPgBtn.addEventListener("click", playGamePgFromEnd2);
