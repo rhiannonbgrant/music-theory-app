@@ -82,7 +82,7 @@ const incorrect = () => {
   seeAnswerBtn.addEventListener("click", seeCorrectAnswer);
 };
 
-//Pages transitions that lead to play game page
+//Pages transitions to play game page
 const playGamePg = () => {
   toPlayGame.generateNote();
   console.log(randomNote);
@@ -93,6 +93,7 @@ const playGameAgainFromCorrect = () => {
   toPlayAgainCorrectPg.generateNote();
   console.log(randomNote);
   toPlayAgainCorrectPg.goToNextPg();
+  seeAnswerDiv.classList.add("fadeOut");
   noteInput.value = "";
 };
 
@@ -104,7 +105,7 @@ const playGameAgainFromIncorrect = () => {
   noteInput.value = "";
 };
 
-//Checks the user Input to see if it correct or not and directs the user to different pg based on the result
+//Checks the user Input to see if they are correct, directs to different pgs based on the result
 const checkPlayerInput = () => {
   let semiToneValue;
   let noteLowerCase = noteInput.value.toLowerCase();
@@ -174,7 +175,7 @@ const seeCorrectAnswer = () => {
   answerHere.innerText = correctUpperCase + semiToneValue + otherNoteName;
 };
 
-//declaring different page transitions
+//Declaring different page transitions
 const toPlayGame = new nextPg(introBtn, introScreen, playGame);
 const toCorrectPg = new nextPg(submitAnsBtn, playGame, correctPg);
 const toPlayAgainCorrectPg = new nextPg(
