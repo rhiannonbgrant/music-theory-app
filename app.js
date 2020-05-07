@@ -19,6 +19,9 @@ const seeAnswerPg = document.querySelector("#see-answer");
 const seeAnswerBtn = document.querySelector("#to-see-answer-button");
 const answerHere = document.querySelector("#see-answer span");
 
+const sharp = document.querySelector("#sharp label");
+const flat = document.querySelector("#flat label");
+
 let randomNote;
 let playerGuess;
 let playerResult;
@@ -37,15 +40,8 @@ class nextPg {
     let randomNumber = Math.floor(Math.random() * notes.length);
     randomNote = notes[randomNumber];
   }
-  // class playGameTime extends nextPg{
-  //   constructor(nextPgBtn, currentPg, nextPg){
-  //     super(nextPgBtn, currentPg, nextPg)
-  //   }
-  // generateNote() {
-  //   let randomNumber = Math.floor(Math.random() * notes.length);
-  //   randomNote = notes[randomNumber];
-  // }
 }
+
 const incorrect = () => {
   seeAnswerDiv.classList.toggle("fadeOut");
   seeAnswerBtn.addEventListener("click", seeCorrectAnswer);
@@ -57,11 +53,33 @@ const incorrect = () => {
 //   this.goToNextPg();
 // };
 
-function seeCorrectAnswer(randomNote) {
-  answerHere.innerText = randomNote;
-  console.log(randomNote);
+const seeCorrectAnswer = () => {
   toSeeAnswerPg.goToNextPg();
-}
+  let semiToneValue;
+  let otherNoteName;
+  let correctNote = randomNote.slice(0, 1);
+  let correctUpperCase = correctNote.toUpperCase();
+  if (randomNote.slice(1, 2) === "s") {
+    semiToneValue = "#";
+    if (randomNote.slice(0, 2) === "cs") {
+      otherNoteName = ", also known as a D" + flat.innerText;
+    } else if (randomNote.slice(0, 2) === "ds") {
+      otherNoteName = ", also known as a E" + flat.innerText;
+    } else if (randomNote.slice(0, 2) === "fs") {
+      otherNoteName = ", also known as a G" + flat.innerText;
+    } else if (randomNote.slice(0, 2) === "gs") {
+      otherNoteName = ", also known as a A" + flat.innerText;
+    } else if (randomNote.slice(0, 2) === "as") {
+      otherNoteName = ", also known as a B" + flat.innerText;
+    } else {
+      otherNoteName = "";
+    }
+  } else {
+    semiToneValue = "";
+    otherNoteName = "";
+  }
+  answerHere.innerText = correctUpperCase + semiToneValue + otherNoteName;
+};
 
 const playGamePg = () => {
   toPlayGame.generateNote();
@@ -158,3 +176,6 @@ playBtn.addEventListener("click", (event) => {
 toPlayGame.nextPgBtn.addEventListener("click", playGamePg);
 toPlayAgain.nextPgBtn.addEventListener("click", playGamePgFromEnd);
 submitAnsBtn.addEventListener("click", checkPlayerInput);
+
+console.log(sharp.innerText);
+console.log(flat.innerText);
